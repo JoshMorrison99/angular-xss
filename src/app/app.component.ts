@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-xss';
+  title = 'Angular XSS';
+  userInput: SafeHtml = "";
+
+  constructor(protected sanitizer: DomSanitizer) {}
+
+  getValue(val:any){
+    this.userInput = this.sanitizer.bypassSecurityTrustHtml(val)
+  }
 }
